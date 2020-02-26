@@ -1,0 +1,19 @@
+@import "~@coreui/coreui/scss/coreui";
+//@import 'node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+@import '~vue-select/src/scss/vue-select';
+$fa-font-path: '~font-awesome/fonts/';
+@import '~font-awesome/scss/font-awesome.scss';
+@import 'sass/variables_vue_select2';
+@import 'sass/auth/login';
+@import 'sass/auth/register';
+
+//Dropdown
+.vs__dropdown-toggle,
+.vs__dropdown-menu {
+  background: #FFFFFF;
+  border-color: #e4e7ea;
+}
+.vs__search::placeholder {
+  color: #5c6873;
+}

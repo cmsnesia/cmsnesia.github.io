@@ -1,0 +1,131 @@
+.login-logo {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.login-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  .login-box {
+    width: 350px;
+    background: white;
+    .login-body {
+      margin: 170px 0 15px;
+
+      .login-title {
+        font-size: 11px;
+        color: #010101;
+      }
+
+      .login-form {
+        margin-top: 30px;
+      }
+    }
+
+
+    @include media-breakpoint-up(xs) {
+      width: 350px;
+      align-content: center;
+      margin: auto;
+    }
+
+    @include media-breakpoint-up(sm) {
+      width: 350px;
+      align-content: center;
+      margin: auto;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 350px;
+      align-content: center;
+      margin: auto;
+    }
+
+
+
+    @include media-breakpoint-up(lg) {
+      width: 450px;
+      //padding: 60px 20px 20px;
+      margin: 0;
+      z-index: 1000;
+
+      &:before {
+        background-color: #fff;
+        content: '';
+        display: block;
+        height: 100vh;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 450px;
+        z-index: -1;
+      }
+
+      .login-logo {
+        max-width: 250px;
+        > img {
+          max-width: 200px;
+          margin: 0 auto;
+        }
+        > a {
+          margin-left: 0px;
+          font-size: 10px;
+        }
+      }
+
+      .login-body {
+        padding: 10% 20px;
+
+        .login-title {
+          color: #010000;
+          font-size: 13px;
+        }
+      }
+
+      .login-footer-img {
+        text-align: left;
+      }
+    }
+  }
+}
+
+//.background {
+//  background: url('~@/assets/img/Group-3x.svg') no-repeat right;
+//  background-size: cover;
+//  //@include media-breakpoint-up(xs) {
+//  //  display: none;
+//  //}
+//  //
+//  //@include media-breakpoint-up(sm) {
+//  //  display: none;
+//  //}
+//  //
+//  //@include media-breakpoint-up(lg) {
+//  //
+//  //}
+//}
+
+.login-logo {
+  @include media-breakpoint-up(xs) {
+    display: none;
+  }
+
+  @include media-breakpoint-up(sm) {
+    display: none;
+  }
+
+  @include media-breakpoint-up(lg) {
+    background-size: cover;
+    display: table-cell;
+    vertical-align: middle;
+    > a {
+      font-size: 10px;
+    }
+  }
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
