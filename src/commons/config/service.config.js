@@ -22,21 +22,18 @@ const service = axios.create({
   ]
 })
 
-// logging response request on development environment
-if (process.env.NODE_ENV === 'development') {
-  service.interceptors.request.use(function (config) {
-    config.headers.authorization = 'Bearer ' + storage.getAccessToken()
-    return config
-  }, function (error) {
-    return Promise.reject(error)
-  })
+service.interceptors.request.use(function (config) {
+  config.headers.authorization = 'Bearer ' + storage.getAccessToken()
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
 
-  // Add a response interceptor
-  service.interceptors.response.use(function (response) {
-    return response
-  }, function (error) {
-    return Promise.reject(error)
-  })
-}
+// Add a response interceptor
+service.interceptors.response.use(function (response) {
+  return response
+}, function (error) {
+  return Promise.reject(error)
+})
 
 export default service
