@@ -44,6 +44,9 @@
 
     <b-row>
       <b-col sm="12" md="6">
+        <b-card style="height: 80px">
+          <input type="file" id="file" ref="thumbnailImage" v-on:change="handleThumbnailImageAdded()"/>
+        </b-card>
       </b-col>
       <b-col sm="12" md="6">
         <b-card style="height: 80px">
@@ -99,24 +102,71 @@ export default {
       categories: [],
       isLoading: false,
       selectedTags: [],
-      tags: []
+      tags: [],
+      thumbnailUrl: ''
     }
   },
 
   methods: {
-    handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
+    imageToBase64: function (file, callback) {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (function (f) {
-        return async function (e) {
+        return function (e) {
           var data = this.result
-          const response = await storeageService.upload(data)
-          Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+          callback(data)
         }
       })(file)
     },
+    imageResizedToBase64: function (file, width, height, callback) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = event => {
+        const img = new Image()
+        img.src = event.target.result
+        img.onload = () => {
+          const elem = document.createElement('canvas')
+          elem.width = width
+          elem.height = height
+          const ctx = elem.getContext('2d')
+          ctx.drawImage(img, 0, 0, width, height)
+          ctx.canvas.toBlob((blob) => {
+            const newFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now()
+            })
+            this.imageToBase64(newFile, callback)
+          }, 'image/jpeg', 1)
+        }
+      }
+    },
+    handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
+      this.imageToBase64(file, async function (data) {
+        const response = await storeageService.upload(data)
+        Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+      })
+    },
     limitTextCategories (count) {
       return `and ${count} kategori lainnya`
+    },
+    handleThumbnailImageAdded: function () {
+      const file = this.$refs.thumbnailImage.files[0]
+      const width = 500
+      const height = 300
+      var parent = this
+      this.imageResizedToBase64(file, width, height, async function (data) {
+        const response = await storeageService.upload(data)
+        const media = {
+          'name': response.data.content.name,
+          'url': response.data.content.download_url,
+          'type': 'THUMBNAIL'
+        }
+        if (parent.medias === null) {
+          parent.medias = [ media ]
+        } else {
+          parent.medias.push(media)
+        }
+      })
     },
     asyncFindCategories (query) {
       this.isLoading = true
@@ -160,6 +210,8 @@ export default {
         swall('Harap menambahkan minimal satu tag')
       } else if (data.content === null || data.content === '') {
         swall('Harap mengisi konten')
+      } else if (data.medias === null || data.medias.length === 0) {
+        swall('Harap meng-unggah thumbnail')
       } else {
         swall({
           title: 'Konfirmasi',
