@@ -158,8 +158,8 @@ export default {
     },
     handleThumbnailImageAdded: function () {
       const file = this.$refs.thumbnailImage.files[0]
-      const width = 1920
-      const height = 917
+      const width = 360
+      const height = 240
       var parent = this
       this.imageResizedToBase64(file, width, height, async function (data) {
         const response = await storeageService.upload(data)
