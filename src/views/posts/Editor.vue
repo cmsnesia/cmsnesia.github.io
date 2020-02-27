@@ -141,10 +141,17 @@ export default {
       }
     },
     handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
-      this.imageToBase64(file, async function (data) {
-        const response = await storeageService.upload(data)
-        Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
-      })
+      var parent = this
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = event => {
+        const img = new Image()
+        img.src = event.target.result
+        parent.imageResizedToBase64(file, img.width, img.height, async function (data) {
+          const response = await storeageService.upload(data)
+          Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+        })
+      }
     },
     limitTextCategories (count) {
       return `and ${count} kategori lainnya`
