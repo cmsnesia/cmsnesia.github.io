@@ -103,7 +103,9 @@ export default {
       isLoading: false,
       selectedTags: [],
       tags: [],
-      thumbnailUrl: ''
+      thumbnailUrl: '',
+      defaultWidth: 360,
+      defaultHeight: 240
     }
   },
 
@@ -141,27 +143,18 @@ export default {
       }
     },
     handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
-      var parent = this
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = event => {
-        const img = new Image()
-        img.src = event.target.result
-        parent.imageResizedToBase64(file, img.width, img.height, async function (data) {
-          const response = await storeageService.upload(data)
-          Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
-        })
-      }
+      this.imageResizedToBase64(file, this.defaultWidth, this.defaultHeight, async function (data) {
+        const response = await storeageService.upload(data)
+        Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+      })
     },
     limitTextCategories (count) {
       return `and ${count} kategori lainnya`
     },
     handleThumbnailImageAdded: function () {
       const file = this.$refs.thumbnailImage.files[0]
-      const width = 360
-      const height = 240
       var parent = this
-      this.imageResizedToBase64(file, width, height, async function (data) {
+      this.imageResizedToBase64(file, this.defaultWidth, this.defaultHeight, async function (data) {
         const response = await storeageService.upload(data)
         const media = {
           'name': response.data.content.name,
@@ -171,7 +164,7 @@ export default {
         if (parent.medias === null) {
           parent.medias = [ media ]
         } else {
-          parent.medias.push(media)
+          parent.medias.splice(0, 0, media)
         }
       })
     },

@@ -66,21 +66,50 @@ export default {
       name: '',
       medias: [],
       content: '',
-      isLoading: false
+      isLoading: false,
+      defaultWidth: 360,
+      defaultHeight: 240
     }
   },
 
   methods: {
-    handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
+    imageToBase64: function (file, callback) {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (function (f) {
-        return async function (e) {
+        return function (e) {
           var data = this.result
-          const response = await storeageService.upload(data)
-          Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+          callback(data)
         }
       })(file)
+    },
+    imageResizedToBase64: function (file, width, height, callback) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = event => {
+        const img = new Image()
+        img.src = event.target.result
+        img.onload = () => {
+          const elem = document.createElement('canvas')
+          elem.width = width
+          elem.height = height
+          const ctx = elem.getContext('2d')
+          ctx.drawImage(img, 0, 0, width, height)
+          ctx.canvas.toBlob((blob) => {
+            const newFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now()
+            })
+            this.imageToBase64(newFile, callback)
+          }, 'image/jpeg', 1)
+        }
+      }
+    },
+    handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
+      this.imageResizedToBase64(file, this.defaultWidth, this.defaultHeight, async function (data) {
+        const response = await storeageService.upload(data)
+        Editor.insertEmbed(cursorLocation, 'image', response.data.content.download_url)
+      })
     },
     async doSave () {
       let data = Object.assign({
