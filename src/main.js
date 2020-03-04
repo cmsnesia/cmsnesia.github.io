@@ -7,10 +7,13 @@ import BootstrapVue from 'bootstrap-vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import { ValidationProvider, extend, ValidationObserver } from 'vee-validate'
-import { required, alpha } from 'vee-validate/dist/rules'
+/* eslint-disable camelcase */
+import { required, alpha, alpha_spaces } from 'vee-validate/dist/rules'
 
 extend('required', required)
 extend('alpha', alpha)
+/* eslint-disable camelcase */
+extend('alpha_spaces', alpha_spaces)
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
