@@ -24,6 +24,7 @@ import Pages from '../views/pages/Pages'
 
 // Profile
 import Profile from '../views/settings/Profile'
+import User from '../views/settings/User'
 
 import storage from '../commons/config/storage.config'
 
@@ -100,6 +101,11 @@ const router = new VueRouter({
       path: '/settings',
       component: DefaultContainer,
       children: [
+        {
+          path: 'user',
+          name: 'User',
+          component: User
+        },
         {
           path: 'profile',
           name: 'Profile',

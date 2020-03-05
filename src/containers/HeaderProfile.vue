@@ -9,34 +9,8 @@
     <template slot="dropdown">
       <b-dropdown-header tag="div" class="text-center"><strong>Akun</strong></b-dropdown-header>
       <b-dropdown-item @click="profile"><i class="fa fa-user"/>Profil</b-dropdown-item>
-      <b-dropdown-item @click="openChangePasswordModal"><i class="fa fa-asterisk"/>Ubah kata sandi</b-dropdown-item>
+      <b-dropdown-item @click="changePassword"><i class="fa fa-asterisk"/>Ubah kata sandi</b-dropdown-item>
       <b-dropdown-item @click="logout"><i class="fa fa-lock"/>Keluar</b-dropdown-item>
-    </template>
-    <template>
-      <b-modal ref="openChangePasswordModal" title="Ubah kata sandi">
-        <div class="form-row">
-          <div class="col-12">
-            <ValidationObserver ref="observer" v-slot="{ invalid }">
-              <div class="form-group">
-                <label>Password baru</label>
-                <ValidationProvider rules="required|alpha_spaces" v-slot="{ errors }">
-                  <input type="password" class="form-control" v-model="newPassword" required>
-                  <span>{{ errors[0] }}</span>
-                </ValidationProvider>
-                <br/>
-                <label>Marukan ulang password baru</label>
-                <ValidationProvider rules="required|alpha_spaces" v-slot="{ errors }">
-                  <input type="password" class="form-control" v-model="verifyPassword" required>
-                  <span>{{ errors[0] }}</span>
-                </ValidationProvider>
-              </div>
-            </ValidationObserver>
-          </div>
-        </div>
-        <div slot="modal-footer">
-            <button type="submit" class="btn btn-primary" @click="doSaveNewPassword" >Simpan</button>
-        </div>
-      </b-modal>
     </template>
   </AppHeaderDropdown>
 </template>
@@ -63,12 +37,10 @@ export default {
       this.$router.replace('/login')
     },
     profile () {
-      alert('Profile')
+      this.$router.push({ path: '/settings/profile' })
     },
-    openChangePasswordModal () {
-    },
-    async doSaveNewPassword () {
-
+    changePassword () {
+      this.$router.push({ path: '/settings/user' })
     }
   }
 }

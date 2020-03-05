@@ -42,18 +42,6 @@ export default {
       icon: 'fa fa-bars'
     },
     {
-      name: 'Settings',
-      url: '/settings',
-      icon: 'fa fa-bars',
-      children: [
-        {
-          name: 'Profile',
-          url: '/settings/profile',
-          icon: 'fa fa-bars'
-        }
-      ]
-    },
-    {
       divider: true
     }
   ]

@@ -21,13 +21,15 @@ export default class AuthService extends HttpService {
     })
   }
 
-  changePassword (newPassword, verifyNewPassword) {
-    const api = this.api + 'changePassword'
-    return this.put({}, api, { 'newPassword': newPassword, 'verifyNewPassword': verifyNewPassword }).then((response) => {
-      if (response.accessToken) {
+  changePassword (newPassword, confirmNewPassword) {
+    const api = process.env.VUE_APP_AUTH_API + 'changePassword'
+    return this.put({ 'newPassword': newPassword, 'confirmNewPassword': confirmNewPassword }, api).then((response) => {
+      if (response.statusCode.code === parseInt(process.env.VUE_APP_STATUS_SAVE_SUCCESS)) {
         storage.saveAccessToken(response.accessToken)
         storage.saveRefreshToken(response.refreshToken)
         return response
+      } else {
+        return null
       }
     })
   }
