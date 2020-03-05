@@ -22,6 +22,9 @@ import Menus from '../views/menus/Menus'
 // Pages
 import Pages from '../views/pages/Pages'
 
+// Profile
+import Profile from '../views/settings/Profile'
+
 import storage from '../commons/config/storage.config'
 
 Vue.use(VueRouter)
@@ -90,6 +93,17 @@ const router = new VueRouter({
           path: '/',
           name: 'Menus',
           component: Menus
+        }
+      ]
+    },
+    {
+      path: '/settings',
+      component: DefaultContainer,
+      children: [
+        {
+          path: 'profile',
+          name: 'Profile',
+          component: Profile
         }
       ]
     },
