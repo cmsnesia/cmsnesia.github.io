@@ -19,7 +19,7 @@
                   {{ message }}
                 </b-alert>
                 <h3 class="mb-3">Selamat Datang di <br/> cmsnesia</h3>
-                <a style="cursor: default; font-size: x-small">Pantau dan kelola produk bisnis Anda dengan mudah. Login menggunakan Username dan Password yang sudah didaftarkan, jika belum mempunyai akun silahkan <router-link to="/register">Register</router-link></a>
+                <a style="cursor: default; font-size: x-small">Login menggunakan Username dan Password yang telah terdaftar</a>
               </div>
               <b-input-group class="mb-4">
                 <b-input-group-prepend>
