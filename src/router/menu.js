@@ -23,6 +23,11 @@ export default {
           name: 'Drafts',
           url: '/posts/drafts',
           icon: 'fa fa-bars'
+        },
+        {
+          name: 'Groups',
+          url: '/posts/groups',
+          icon: 'fa fa-bars'
         }
       ]
     },

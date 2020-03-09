@@ -10,6 +10,7 @@ import DefaultContainer from '../containers/DefaultContainer'
 // Post
 import Published from '../views/posts/Published'
 import Drafts from '../views/posts/Drafts'
+import Groups from '../views/posts/Groups'
 import Editor from '../views/posts/Editor'
 import PageEditor from '../views/pages/Editor'
 
@@ -51,6 +52,11 @@ const router = new VueRouter({
           path: 'drafts',
           name: 'Drafts',
           component: Drafts
+        },
+        {
+          path: 'groups',
+          name: 'Groups',
+          component: Groups
         },
         {
           path: 'editor/:id',

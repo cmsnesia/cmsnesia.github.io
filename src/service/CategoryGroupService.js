@@ -3,8 +3,8 @@ import HttpService from './HttpService'
 // eslint-disable-next-line no-unused-vars
 // import storage from "../commons/config/storage.config";
 
-export default class CategoryService extends HttpService {
-  static api = process.env.VUE_APP_CATEGORY_API
+export default class CategoryGroupService extends HttpService {
+  static api = process.env.VUE_APP_CATEGORY_GROUP_API
 
   add (data) {
     const api = this.api + 'add'
@@ -24,10 +24,5 @@ export default class CategoryService extends HttpService {
   find (data, param) {
     const api = this.api + 'find'
     return this.post(data, api, param)
-  }
-
-  findByIds (data) {
-    const api = this.api + 'findByIds'
-    return this.post(data, api)
   }
 }
