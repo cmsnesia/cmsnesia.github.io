@@ -32,7 +32,7 @@ import storage from '../commons/config/storage.config'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   linkActiveClass: 'open active',
   routes: [
     {
