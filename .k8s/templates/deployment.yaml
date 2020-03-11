@@ -28,6 +28,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: "metadata.namespace"
+            - name: "NGINX_HOST"
+              value: "admin.cmsnesia.com"
+            - name: "NGINX_PORT"
+              value: "80"
           name: "cmsnesia-admin"
           image: "ardikars/cmsnesia-admin:latest"
           ports:

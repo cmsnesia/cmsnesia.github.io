@@ -16,9 +16,6 @@ RUN npm run build-prod
 
 FROM nginx:stable-alpine as production-stage
 
-RUN addgroup -S cmsnesia && adduser -S cmsnesia-web -G cmsnesia
-USER cmsnesia-web:cmsnesia
-
 COPY --from=builder /workspace/dist /usr/share/nginx/html
 
 EXPOSE 80
