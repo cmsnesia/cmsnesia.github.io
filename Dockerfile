@@ -1,0 +1,21 @@
+from node:lts-alpine AS builder
+
+WORKDIR /workspace
+
+COPY package.json package.json
+RUN npm install
+
+COPY public public/
+COPY src src/
+COPY babel.config.js babel.config.js
+RUN npm run build-prod
+
+FROM nginx:stable-alpine as production-stage
+
+RUN addgroup -S cmsnesia && adduser -S cmsnesia-web -G cmsnesia
+USER cmsnesia-web:cmsnesia
+
+COPY --from=builder /workspace/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
